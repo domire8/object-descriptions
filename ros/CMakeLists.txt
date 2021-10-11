@@ -6,6 +6,7 @@ find_package(catkin REQUIRED)
 
 catkin_package()
 
-foreach(dir launch meshes objects rviz)
-   install(DIRECTORY ${dir}/ DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/${dir})
-endforeach(dir)
+install(
+  DIRECTORY launch meshes objects rviz
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
