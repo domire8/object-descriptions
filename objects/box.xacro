@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<robot name="box" xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <xacro:macro name="box"
+               params="prefix='box_' connected_to:='' xyz:='0 0 0' rpy:='0 0 0' height:=0.15 x_size:=0.5 y_size=0.5
+               thickness=0.02 mass=3.0">
+
+    <material name="grey">
+      <color rgba="0.9 0.9 0.9 0.9"/>
+    </material>
+
+    <xacro:if value="${connected_to == ''}">
+      <link name="world"/>
+      <xacro:property name="base_frame_name" value="world"/>
+    </xacro:if>
+    <xacro:unless value="${connected_to == ''}">
+      <xacro:property name="base_frame_name" value="${connected_to}"/>
+    </xacro:unless>
+
+    <joint name="${prefix}base_to_${base_frame_name}" type="fixed">
+      <parent link="${base_frame_name}"/>
+      <child link="${prefix}base_link"/>
+      <origin rpy="${rpy}" xyz="${xyz}"/>
+    </joint>
+
+    <link name="${prefix}base_link"/>
+    <joint name="base_to_bottom" type="fixed">
+      <parent link="${prefix}base_link"/>
+      <origin xyz="0 0 ${thickness}"/>
+      <child link="${prefix}bottom_link"/>
+    </joint>
+
+    <link name="${prefix}bottom_link">
+      <inertial>
+        <mass value="${mass}"/>
+        <origin xyz="0 0 ${-thickness/2}"/>
+        <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1"/>
+      </inertial>
+
+      <!--      bottom plate-->
+      <visual>
+        <origin xyz="0 0 ${-thickness/2}"/>
+        <geometry>
+          <box size="${x_size} ${y_size} ${thickness}"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${-thickness/2}"/>
+        <geometry>
+          <box size="${x_size} ${y_size} ${thickness}"/>
+        </geometry>
+      </collision>
+
+      <!--    wall 1-->
+      <visual>
+        <origin xyz="${(x_size - thickness)/2}  0 ${height/2 - thickness/2}"/>
+        <geometry>
+          <box size="${thickness} ${y_size} ${height - thickness}"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+      <collision>
+        <origin xyz="${(x_size - thickness)/2}  0 ${height/2 - thickness/2}"/>
+        <geometry>
+          <box size="${thickness} ${y_size} ${height - thickness}"/>
+        </geometry>
+      </collision>
+
+      <!--    wall 2-->
+      <visual>
+        <origin xyz="0 ${(y_size - thickness)/2}  ${height/2 - thickness/2}"/>
+        <geometry>
+          <box size="${x_size} ${thickness} ${height - thickness}"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0 ${(y_size - thickness)/2}  ${height/2 - thickness/2}"/>
+        <geometry>
+          <box size="${x_size} ${thickness} ${height - thickness}"/>
+        </geometry>
+      </collision>
+
+      <!--    wall 3-->
+      <visual>
+        <origin xyz="-${(x_size - thickness)/2}  0 ${height/2 - thickness/2}"/>
+        <geometry>
+          <box size="${thickness} ${y_size} ${height - thickness}"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+      <collision>
+        <origin xyz="-${(x_size - thickness)/2}  0 ${height/2 - thickness/2}"/>
+        <geometry>
+          <box size="${thickness} ${y_size} ${height - thickness}"/>
+        </geometry>
+      </collision>
+
+      <!--    wall 4-->
+      <visual>
+        <origin xyz="0 -${(y_size - thickness)/2}  ${height/2 - thickness/2}"/>
+        <geometry>
+          <box size="${x_size} ${thickness} ${height - thickness}"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0 -${(y_size - thickness)/2}  ${height/2 - thickness/2}"/>
+        <geometry>
+          <box size="${x_size} ${thickness} ${height - thickness}"/>
+        </geometry>
+      </collision>
+    </link>
+
+  </xacro:macro>
+
+</robot>

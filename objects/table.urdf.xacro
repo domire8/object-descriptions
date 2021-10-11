@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot name="table" xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <xacro:arg name="prefix" default="table_"/>
+  <xacro:arg name="connected_to" default=""/>
+  <xacro:arg name="xyz" default="'0 0 0'"/>
+  <xacro:arg name="rpy" default="'0 0 0'"/>
+  <xacro:arg name="height" default="0.6"/>
+  <xacro:arg name="x_size" default="0.5"/>
+  <xacro:arg name="y_size" default="1.0"/>
+  <xacro:arg name="plate_thickness" default="0.05"/>
+  <xacro:arg name="leg_radius" default="0.02"/>
+  <xacro:arg name="mass" default="10"/>
+
+  <xacro:include filename="$(find object_descriptions)/objects/table.xacro"/>
+
+  <xacro:table prefix="$(arg prefix)" connected_to="$(arg connected_to)" xyz="$(arg xyz)" rpy="$(arg rpy)"
+               height="$(arg height)" x_size="$(arg x_size)" y_size="$(arg y_size)" thickness="$(arg plate_thickness)"
+               radius="$(arg leg_radius)" mass="$(arg mass)"/>
+
+</robot>
