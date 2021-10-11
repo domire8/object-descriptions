@@ -1,10 +1,10 @@
 ARG BASE_IMAGE
-FROM ghcr.io/aica-technology/ros-ws:noetic
+FROM ${BASE_IMAGE}
 
 ARG USERNAME
+ARG BUILD_COMMAND
 USER ${USERNAME}
-WORKDIR ${HOME}/${USERNAME}_ws/src
-COPY --chown=${USER}  ./object_descriptions ./object_descriptions
-
 WORKDIR ${HOME}/${USERNAME}_ws
-RUN /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash; catkin_make"
+COPY --chown=${USER} ./object_descriptions ./src/object_descriptions
+
+RUN /bin/bash -c "${BUILD_COMMAND}"
