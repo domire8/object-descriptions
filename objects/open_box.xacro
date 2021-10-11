@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="box" xmlns:xacro="http://wiki.ros.org/xacro">
 
-  <xacro:macro name="box"
+  <xacro:macro name="open_box"
                params="prefix='box_' connected_to:='' xyz:='0 0 0' rpy:='0 0 0' height:=0.15 x_size:=0.5 y_size=0.5
                thickness=0.02 mass=3.0">
 

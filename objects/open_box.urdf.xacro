@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="table" xmlns:xacro="http://wiki.ros.org/xacro">
+<robot name="open_box" xmlns:xacro="http://wiki.ros.org/xacro">
 
   <xacro:arg name="prefix" default="box_"/>
   <xacro:arg name="connected_to" default=""/>
@@ -11,9 +11,9 @@
   <xacro:arg name="wall_thickness" default="0.02"/>
   <xacro:arg name="mass" default="3.0"/>
 
-  <xacro:include filename="$(find object_descriptions)/objects/box.xacro"/>
+  <xacro:include filename="$(find object_descriptions)/objects/open_box.xacro"/>
 
-  <xacro:box prefix="$(arg prefix)" connected_to="$(arg connected_to)" xyz="$(arg xyz)" rpy="$(arg rpy)"
-             height="$(arg height)" x_size="$(arg x_size)" y_size="$(arg y_size)" thickness="$(arg wall_thickness)"
-             mass="$(arg mass)"/>
+  <xacro:open_box prefix="$(arg prefix)" connected_to="$(arg connected_to)" xyz="$(arg xyz)" rpy="$(arg rpy)"
+                  height="$(arg height)" x_size="$(arg x_size)" y_size="$(arg y_size)" thickness="$(arg wall_thickness)"
+                  mass="$(arg mass)"/>
 </robot>
