@@ -15,10 +15,10 @@ fi
 
 if [[ " ${ROS_SUPPORTED[*]} " == *" ${ROS_VERSION} "* ]]; then
   rm -rf ./object_descriptions && mkdir -p ./object_descriptions || exit 1
-  cp -r ./ros/* ./object_descriptions/ && rm ./object_descriptions/CATKIN_IGNORE || exit 1
+  cp -r ./ros/* ./object_descriptions/ && rm ./object_descriptions/*IGNORE || exit 1
 elif [[ " ${ROS2_SUPPORTED[*]} " == *" ${ROS_VERSION} "* ]]; then
   rm -rf ./object_descriptions && mkdir -p ./object_descriptions || exit 1
-  cp -r ./ros2/* ./object_descriptions/ && rm ./object_descriptions/COLCON_IGNORE || exit 1
+  cp -r ./ros2/* ./object_descriptions/ && rm ./object_descriptions/*IGNORE || exit 1
 else
   echo "ROS version '${ROS_VERSION}' is currently not supported."
   echo -e "\n${HELP_MESSAGE}"
