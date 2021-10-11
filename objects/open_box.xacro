@@ -16,6 +16,10 @@
     <xacro:unless value="${connected_to == ''}">
       <xacro:property name="base_frame_name" value="${connected_to}"/>
     </xacro:unless>
+    <xacro:if value="${connected_to == 'odom'}">
+      <link name="odom"/>
+      <xacro:property name="base_frame_name" value="odom"/>
+    </xacro:if>
 
     <joint name="${prefix}base_to_${base_frame_name}" type="fixed">
       <parent link="${base_frame_name}"/>
