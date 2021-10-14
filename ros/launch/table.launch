@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="urdf_path" default="$(find object_descriptions)/objects/table.urdf.xacro"/>
+
+  <param name="robot_description"
+         command="$(find xacro)/xacro $(arg urdf_path) prefix:='table_' connected_to:='' xyz:='1 0.5 0' rpy:='0 0 1.57'
+         height:=0.6 x_size:=0.5 y_size:=1"/>
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen"/>
+
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find object_descriptions)/rviz/object.rviz"/>
+
+</launch>

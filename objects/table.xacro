@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<robot name="table" xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <xacro:macro name="table"
+               params="prefix='table_' connected_to:='' xyz:='0 0 0' rpy:='0 0 0' height:=0.6 x_size:=0.5 y_size=0.5
+               thickness=0.05 radius=0.02 mass=10.0">
+
+    <xacro:property name="leg_length" value="${height - thickness}"/>
+    <xacro:property name="mass" value="10"/>
+
+    <material name="black">
+      <color rgba="0 0 0 1"/>
+    </material>
+    <material name="grey">
+      <color rgba="0.76 0.76 0.76 1"/>
+    </material>
+
+    <xacro:if value="${connected_to == ''}">
+      <link name="world"/>
+      <xacro:property name="base_frame_name" value="world"/>
+    </xacro:if>
+    <xacro:unless value="${connected_to == ''}">
+      <xacro:property name="base_frame_name" value="${connected_to}"/>
+    </xacro:unless>
+    <xacro:if value="${connected_to == 'odom'}">
+      <link name="odom"/>
+      <xacro:property name="base_frame_name" value="odom"/>
+    </xacro:if>
+
+    <joint name="${prefix}base_to_${base_frame_name}" type="fixed">
+      <parent link="${base_frame_name}"/>
+      <child link="${prefix}base_link"/>
+      <origin rpy="${rpy}" xyz="${xyz}"/>
+    </joint>
+
+    <link name="${prefix}base_link"/>
+
+    <joint name="base_to_top" type="fixed">
+      <parent link="${prefix}base_link"/>
+      <origin xyz="0 0 ${height}"/>
+      <child link="${prefix}top_link"/>
+    </joint>
+
+    <link name="${prefix}top_link">
+      <!--      top plate-->
+      <inertial>
+        <mass value="${mass}"/>
+        <origin xyz="0 0 ${-height/2}"/>
+        <inertia ixx="0.8" ixy="0" ixz="0" iyy="0.8" iyz="0" izz="0.8"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 ${-thickness/2}"/>
+        <geometry>
+          <box size="${x_size} ${y_size} ${thickness}"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${-thickness/2}"/>
+        <geometry>
+          <box size="${x_size} ${y_size} ${thickness}"/>
+        </geometry>
+      </collision>
+
+      <!--      leg 1-->
+      <visual>
+        <origin xyz="${x_size/2 - radius} ${y_size/2 - radius} ${- thickness - leg_length/2}"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${leg_length}"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <origin xyz="${x_size/2 - radius} ${y_size/2 - radius} ${- thickness - leg_length/2}"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${leg_length}"/>
+        </geometry>
+      </collision>
+
+      <!--      leg 2-->
+      <visual>
+        <origin xyz="${x_size/2 - radius} -${y_size/2 - radius} ${- thickness - leg_length/2}"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${leg_length}"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <origin xyz="${x_size/2 - radius} -${y_size/2 - radius} ${- thickness - leg_length/2}"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${leg_length}"/>
+        </geometry>
+      </collision>
+
+      <!--      leg 3-->
+      <visual>
+        <origin xyz="-${x_size/2 - radius} -${y_size/2 - radius} ${- thickness - leg_length/2}"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${leg_length}"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <origin xyz="-${x_size/2 - radius} -${y_size/2 - radius} ${- thickness - leg_length/2}"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${leg_length}"/>
+        </geometry>
+      </collision>
+
+      <!--      leg 2-->
+      <visual>
+        <origin xyz="-${x_size/2 - radius} ${y_size/2 - radius} -${thickness + leg_length/2}"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${leg_length}"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <origin xyz="-${x_size/2 - radius} ${y_size/2 - radius} -${thickness + leg_length/2}"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${leg_length}"/>
+        </geometry>
+      </collision>
+    </link>
+
+  </xacro:macro>
+
+</robot>
